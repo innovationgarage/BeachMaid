@@ -1,0 +1,68 @@
+# Gear template generator 3.0.4
+# Licensed to:  EDUCATIONAL PURPOSES ONLY
+#              
+
+# Gear type perameters:
+  ContactAngle_deg=20
+  ToothSpacing=1.5
+  ToothPinwheel=False
+  ToothInvolute=True
+  ToothProtractor=False
+  PinSize=1
+  Slop=0
+
+# Gear1:
+  ShowGear1=True
+  ToothCount1=20
+  ShowSpokes1=False
+  SpokeCount1=5
+  Spur1=True
+  Rack1=False
+  Ring1=False
+  ShaftHoleDia1=1
+  Addendum1=0.25
+
+# Gear2:
+  ShowGear2=True
+  ToothCount2=21
+  ShowSpokes2=False
+  SpokeCount2=5
+  Spur2=True
+  Rack2=False
+  Ring2=False
+  ShaftHoleDia2=1
+  Addendum2=0.25
+
+# Chain mode parameters:
+  BlockLength=42
+  BlockWidth=35
+  BlockChamfer=17.5
+  LinkLength=50
+  LinkWidth=40
+  LinkChamfer=20
+  ShowChainLinks=True
+  ShowChainBlocks=True
+  ShowSprocket=True
+  RoundChamfers=True
+  RollerChain=False
+  SprocketTeeth=7
+  ChainPinSize=6
+
+# Display options:
+  ScreenViewWidth=620
+  Rotation=70
+  ShowPitchDia=False
+  ShowCenter=True
+  ShowLineOfContact=False
+  ShowAnimated=True
+  DrawThick=True
+  DrawUnmeshed=False
+
+# Grid:
+  ShowGrid=False
+  GridSpacing=1
+  GridDiagonals=False
+
+  Units=mm
+
+  ActiveTab=Chain
