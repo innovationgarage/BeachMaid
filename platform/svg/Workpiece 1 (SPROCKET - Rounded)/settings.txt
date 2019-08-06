@@ -1,0 +1,3 @@
+Material type: Birch Plywood
+Material dimensions: 819.9999999999999 mm x 300 mm x 12 mm
+Bit: 3 mm, other-flat

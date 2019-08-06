@@ -1,0 +1,68 @@
+# Gear template generator 3.0.4
+# Licensed to: CRACKED BY MSCOTTON - EDUCATIONAL PURPOSES ONLY
+#              
+
+# Gear type perameters:
+  ContactAngle_deg=20
+  ToothSpacing=16.904760469316517277081911698
+  ToothPinwheel=False
+  ToothInvolute=True
+  ToothProtractor=False
+  PinSize=1
+  Slop=0
+
+# Gear1:
+  ShowGear1=True
+  ToothCount1=15
+  ShowSpokes1=False
+  SpokeCount1=5
+  Spur1=True
+  Rack1=False
+  Ring1=False
+  ShaftHoleDia1=60.000
+  Addendum1=0.25
+
+# Gear2:
+  ShowGear2=True
+  ToothCount2=6
+  ShowSpokes2=False
+  SpokeCount2=5
+  Spur2=True
+  Rack2=False
+  Ring2=False
+  ShaftHoleDia2=9
+  Addendum2=0.25
+
+# Chain mode parameters:
+  BlockLength=1.2
+  BlockWidth=0.8
+  BlockChamfer=0.2
+  LinkLength=2
+  LinkWidth=1
+  LinkChamfer=0.2
+  ShowChainLinks=True
+  ShowChainBlocks=True
+  ShowSprocket=True
+  RoundChamfers=False
+  RollerChain=False
+  SprocketTeeth=5
+  ChainPinSize=0.1
+
+# Display options:
+  ScreenViewWidth=600
+  Rotation=0
+  ShowPitchDia=False
+  ShowCenter=False
+  ShowLineOfContact=False
+  ShowAnimated=True
+  DrawThick=False
+  DrawUnmeshed=False
+
+# Grid:
+  ShowGrid=True
+  GridSpacing=10
+  GridDiagonals=False
+
+  Units=mm
+
+  ActiveTab=GearTeeth
