@@ -89,20 +89,25 @@ module pipewheels(wheel_radius=30, length=200, track_width=140, pipe_radius=25, 
     translate([length/2+pipe_radius+cogwheelr-2,0,2*wheel_radius-cogwheelr]) rotate(-90, [1, 0, 0]) cylinder(r=pinr, h=track_width);
 }
 
-module cart(wheel_radius=30, length=200, track_width=140, pipe_radius=25, cogwheelr=20) {
+module cart_base_w_holes(wheel_radius=30, length=200, track_width=140, pipe_radius=25, cogwheelr=20) {
     difference() {
         cart_base(wheel_radius=wheel_radius, length=length, track_width=track_width, pipe_radius=pipe_radius);
         cart_boogie(radius=wheel_radius, length=length, track_width=track_width, pinr=2.5);
         pipewheels(wheel_radius, length, track_width, pipe_radius, cogwheelr);
         translate([length/2, track_width/2, -material]) cylinder(r=pipe_radius, h=3*material);
     }
+}
 
+module cart(wheel_radius=30, length=200, track_width=140, pipe_radius=25, cogwheelr=20) {
+    cart_base_w_holes(wheel_radius, length, track_width, pipe_radius, cogwheelr);
     color([.5, .5, 1]) sleeve(wheel_radius, length, track_width, pipe_radius);
     color([1,1,1]) pipewheels(wheel_radius, length, track_width, pipe_radius, cogwheelr);    
     cart_boogie(radius=wheel_radius, length=length, track_width=track_width, pinr=2.5);    
 }
 
 
-color([1, 0, 0]) platform();
-translate([0,150,0]) track(width=30);
-translate([200,150,0]) cart();
+*color([1, 0, 0]) platform();
+*translate([0,150,0]) track(width=30);
+*translate([200,150,0]) cart();
+
+translate([1000]) projection(cut=True) translate([0,0,-material]) rotate(90, [1, 0, 0]) cart_base_w_holes();
