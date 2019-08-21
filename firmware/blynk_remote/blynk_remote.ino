@@ -149,7 +149,7 @@ void belts_callback(cmd* commandPointer) {
 }
 
 void setup() {
-  Serial.begin(74880);
+  Serial.begin(9600);
   cli.setOnError(errorCallback); // Set error Callback
   stop = cli.addCmd("stop", stop_callback);
   help = cli.addCmd("help", help_callback);
