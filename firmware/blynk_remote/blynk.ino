@@ -1,11 +1,30 @@
+void report_status()
+{
+  Blynk.virtualWrite(V40, (leftbelt_current+rightbelt_current)/2);
+  Blynk.virtualWrite(V41, (leftbelt_setpoint+rightbelt_setpoint)/2);
+  Blynk.virtualWrite(V42, map(analogRead(A0),0,1024,0,18300)/1000.0);
+}
+
+void setSmoothing(int s)
+{
+  smoothing = min(1000.0, max(1.0, s / 100.0));
+}
+
+BLYNK_WRITE(V9) // Smoothing
+{
+  setSmoothing(param.asInt());
+}
+
 BLYNK_WRITE(V1)
 {
-  setMotorSpeed(leftEngine, param.asInt());
+  //setBothMotorsSpeed(param.asInt(), rightbelt_current);
+  leftbelt_setpoint=param.asInt();
 }
 
 BLYNK_WRITE(V2)
 {
-  setMotorSpeed(rightEngine, param.asInt(), true);
+  //setBothMotorsSpeed(leftbelt_current, param.asInt());
+  rightbelt_setpoint=param.asInt();
 }
 
 BLYNK_WRITE(V11) // X speed
@@ -31,7 +50,14 @@ BLYNK_WRITE(V13) // time delay and execute
 // Basic (Joystick)
 BLYNK_WRITE(V10)
 {
-  setMotorsDirection(param[0].asInt(), param[1].asInt());
+  //setMotorsDirection(-param[0].asInt(), -param[1].asInt());
+  convertMotorsDirection(-param[0].asInt(), -param[1].asInt(), leftbelt_setpoint, rightbelt_setpoint);
+}
+
+BLYNK_WRITE(V4) // Stop
+{
+  if (param.asInt() == 1)
+    stop_all();
 }
 
 BLYNK_WRITE(V3)

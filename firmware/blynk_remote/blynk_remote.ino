@@ -8,7 +8,7 @@
 #include <ESP8266WiFiMulti.h>
 
 ESP8266WiFiMulti wifiMulti;     // Create an instance of the ESP8266WiFiMulti class, called 'wifiMulti'
-//BlynkTimer timer;
+BlynkTimer speed_controller, system_status;
 
 // Motor pins
 struct MotorPins
@@ -24,15 +24,17 @@ unsigned long remote_stop = 0;
 unsigned long noMessagesTimeout = 0;
 const unsigned long stopAfterNoMessageMs = 10000;
 const MotorPins leftEngine = { D7, D6, D5}, rightEngine = { D3, D2, D1};
+double smoothing = 1, leftbelt_current = 0, rightbelt_current = 0;
+int leftbelt_setpoint = 0, rightbelt_setpoint = 0;
 
 void setMotorSpeed( MotorPins motor, int speed, bool reverse = false)
 {
   /*Serial.print("Speed: ");
-  Serial.println(speed);
-  Serial.print("PIN: ");
-  Serial.println(motor.RPWM);*/
+    Serial.println(speed);
+    Serial.print("PIN: ");
+    Serial.println(motor.RPWM);*/
 
-  speed *= reverse ? -1 : 1;
+  speed *= reverse ? 1 : -1;
   int pwm = max(0, min(1024, (int)map(abs(speed), 0, 100, 0, 1024)));
   bool direction = speed > 0;
   noMessagesTimeout = millis() + stopAfterNoMessageMs;
@@ -53,8 +55,26 @@ void setMotorSpeed( MotorPins motor, int speed, bool reverse = false)
   //analogWrite(motor.L_EN, pwm);
 }
 
+void setBothMotorsSpeed(int left, int right)
+{
+  /*Serial.print("New setpoints left speed:");
+    Serial.print(left);
+    Serial.print("\t, right: ");
+    Serial.println(right);*/
 
-void setMotorsDirection(int x, int y)
+  leftbelt_setpoint = left;
+  rightbelt_setpoint = right;
+  check_and_set_speed();
+}
+
+int setMotorsDirection(int x, int y)
+{
+  int left, right;
+  convertMotorsDirection(x, y, left, right);
+  setBothMotorsSpeed(left, right);
+}
+
+void convertMotorsDirection(int x, int y, int &left, int &right)
 {
   // From http://home.kendra.com/mauser/Joystick.html
   int X = max(-100, min(100, -1 * x));
@@ -63,8 +83,8 @@ void setMotorsDirection(int x, int y)
   double V = (100 - abs(X)) * (Y / 100) + Y;
   double W = (100 - abs(Y)) * (X / 100) + X;
 
-  setMotorSpeed(leftEngine, (V + W) / 2, true);
-  setMotorSpeed(rightEngine, (V - W) / 2, false);
+  left = (V + W) / 2;
+  right = (V - W) / 2;
 
   /*Serial.print("motor left speed");
     Serial.println((V + W) / 2);
@@ -74,8 +94,10 @@ void setMotorsDirection(int x, int y)
 
 void stop_all()
 {
-  setMotorSpeed(leftEngine, 0);
-  setMotorSpeed(rightEngine, 0);
+  double old = smoothing;
+  smoothing = 1;
+  setBothMotorsSpeed(0, 0);
+  smoothing = old;
 }
 
 // CLI interface
@@ -105,83 +127,35 @@ void setMotorPins( MotorPins motor)
   //pinMode(motor.R_EN, OUTPUT);
 }
 
-void boot_msg()
+
+void check_and_set_speed()
 {
-  Serial.print("Innovation Garage AS - ");
-  Serial.print(machine_name);
-  Serial.print(" Build ");
-  Serial.print(__DATE__);
-  Serial.print(" ");
-  Serial.println(__TIME__);
-  Serial.println("Type help for more information"); 
-  Serial.println();
-}
+  leftbelt_current += (leftbelt_setpoint - leftbelt_current) / smoothing;
+  rightbelt_current += (rightbelt_setpoint - rightbelt_current) / smoothing;
 
-void stop_callback(cmd* commandPointer) {
-  Serial.print("Sending stop: ");
-  stop_all();
-  Serial.println("OK");
-}
+  // Just remove some noise
+  if (abs(leftbelt_setpoint - leftbelt_current) < 1)
+    leftbelt_current = leftbelt_setpoint;
 
-void help_callback(cmd* commandPointer) {
-  boot_msg();
-  Serial.println("Available commands: ");
-  Serial.println(cli.toString());
-}
+  if (abs(rightbelt_setpoint - rightbelt_current) < 1)
+    rightbelt_current = rightbelt_setpoint;
 
-void move_callback(cmd* commandPointer) {
-  Command cmd(commandPointer); // Create wrapper class instance for the pointer
-  Argument x = cmd.getArgument("x");
-  Argument y = cmd.getArgument("y");
-  Serial.print("Sending move to motors: ");
-  setMotorsDirection(x.getValue().toInt(), y.getValue().toInt());
-  Serial.println("OK");
-}
+  setMotorSpeed(leftEngine, leftbelt_current, true);
+  setMotorSpeed(rightEngine, rightbelt_current, false);
 
-void belts_callback(cmd* commandPointer) {
-  Command cmd(commandPointer); // Create wrapper class instance for the pointer
-  Argument left = cmd.getArgument("left");
-  Argument right = cmd.getArgument("right");
-  Serial.print("Sending belt speed to motors: ");
-  setMotorSpeed(leftEngine, left.getValue().toInt());
-  setMotorSpeed(rightEngine, right.getValue().toInt(), true);
-  Serial.println("OK");
-}
-
-void setup() {
-  Serial.begin(9600);
-  cli.setOnError(errorCallback); // Set error Callback
-  stop = cli.addCmd("stop", stop_callback);
-  help = cli.addCmd("help", help_callback);
-  move = cli.addCmd("move", move_callback);
-  move.addPosArg("x");
-  move.addPosArg("y");
-  belts = cli.addCmd("belts", belts_callback);
-  belts.addPosArg("left");
-  belts.addPosArg("right");
-  
-  beep();
-  boot_msg();
-
-  wifiMulti.addAP(ssid1, pass1);
-  wifiMulti.addAP(ssid2, pass2);
-  wifiMulti.addAP(ssid3, pass3);
-
-  WiFi.hostname(machine_name);
-  WiFi.mode(WIFI_STA);
-
-  Blynk.config(auth, server, server_port);  // I am using the local Server
-  check_connection();// It needs to run first to initiate the connection.Same function works for checking the connection!
-  //timer.setInterval(5000L, check_connection);
-
-  // Set motor pins
-  setMotorPins(leftEngine);
-  setMotorPins(rightEngine);
-  play_melody(10); // Boot
+  /*Serial.print(leftbelt_current);
+    Serial.print("\t");
+    Serial.println(rightbelt_current);*/
 }
 
 void loop() {
   Blynk.run();
+
+  // Control the engines
+  speed_controller.run();
+
+  // Report info back to the remote
+  system_status.run();
 
   if (Serial.available())
   {
