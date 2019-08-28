@@ -31,9 +31,9 @@ void status_callback(cmd* commandPointer) {
   Serial.println(leftbelt_setpoint);
   Serial.print("rightbelt_setpoint=");
   Serial.println(rightbelt_setpoint);
-  Serial.print("leftbelt_setpoint=");
+  Serial.print("leftbelt_current=");
   Serial.println(leftbelt_current);
-  Serial.print("rightbelt_setpoint=");
+  Serial.print("rightbelt_current=");
   Serial.println(rightbelt_current);
   Serial.print("smoothing=");
   Serial.println(smoothing);
