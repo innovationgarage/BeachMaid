@@ -2,7 +2,7 @@ void report_status()
 {
   Blynk.virtualWrite(V40, (leftbelt_current+rightbelt_current)/2);
   Blynk.virtualWrite(V41, (leftbelt_setpoint+rightbelt_setpoint)/2);
-  Blynk.virtualWrite(V42, map(analogRead(A0),0,1024,0,18300)/1000.0);
+  Blynk.virtualWrite(V42, get_battery_voltage());
 }
 
 void setSmoothing(int s)

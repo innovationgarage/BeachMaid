@@ -102,7 +102,7 @@ void stop_all()
 
 // CLI interface
 SimpleCLI cli;
-Command move, belts, stop, help;
+Command move, belts, stop, help, status;
 
 // Callback in case of an error
 void errorCallback(cmd_error* e)

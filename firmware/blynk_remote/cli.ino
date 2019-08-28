@@ -1,4 +1,9 @@
-void boot_msg(bool info=false)
+double get_battery_voltage()
+{
+  return map(analogRead(A0), 0, 1024, 0, 18300) / 1000.0;
+}
+
+void boot_msg(bool info = false)
 {
   Serial.println();
   Serial.print("Innovation Garage AS - ");
@@ -8,7 +13,7 @@ void boot_msg(bool info=false)
   Serial.print(" ");
   Serial.println(__TIME__);
 
-  if(info)
+  if (info)
     Serial.println("Type help for more information");
   Serial.println();
 }
@@ -17,6 +22,21 @@ void stop_callback(cmd* commandPointer) {
   Serial.print("Sending stop: ");
   stop_all();
   Serial.println("OK");
+}
+
+void status_callback(cmd* commandPointer) {
+  Serial.print("battery=");
+  Serial.println(get_battery_voltage());
+  Serial.print("leftbelt_setpoint=");
+  Serial.println(leftbelt_setpoint);
+  Serial.print("rightbelt_setpoint=");
+  Serial.println(rightbelt_setpoint);
+  Serial.print("leftbelt_setpoint=");
+  Serial.println(leftbelt_current);
+  Serial.print("rightbelt_setpoint=");
+  Serial.println(rightbelt_current);
+  Serial.print("smoothing=");
+  Serial.println(smoothing);
 }
 
 void help_callback(cmd* commandPointer) {

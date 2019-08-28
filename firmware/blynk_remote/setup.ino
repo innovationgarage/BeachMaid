@@ -3,6 +3,8 @@ void setup() {
   cli.setOnError(errorCallback); // Set error Callback
   stop = cli.addCmd("stop", stop_callback);
   help = cli.addCmd("help", help_callback);
+  status = cli.addCmd("status", status_callback);
+  
   move = cli.addCmd("move", move_callback);
   move.addPosArg("x");
   move.addPosArg("y");
