@@ -1,5 +1,6 @@
 /* Comment this out to disable prints and save space */
 #define BLYNK_PRINT Serial
+//#define BLYNK_DEBUG // Optional, this enables more detailed prints
 
 #include <SimpleCLI.h>
 #include "credentials.h"
@@ -24,7 +25,7 @@ unsigned long remote_stop = 0;
 unsigned long noMessagesTimeout = 0;
 const unsigned long stopAfterNoMessageMs = 10000;
 const MotorPins leftEngine = { D7, D6, D5}, rightEngine = { D3, D2, D1};
-double smoothing = 1, leftbelt_current = 0, rightbelt_current = 0;
+float smoothing = 1, leftbelt_current = 0, rightbelt_current = 0;
 int leftbelt_setpoint = 0, rightbelt_setpoint = 0;
 
 void setMotorSpeed( MotorPins motor, int speed, bool reverse = false)
@@ -80,8 +81,8 @@ void convertMotorsDirection(int x, int y, int &left, int &right)
   int X = max(-100, min(100, -1 * x));
   int Y = max(-100, min(100, -1 * y));
 
-  double V = (100 - abs(X)) * (Y / 100) + Y;
-  double W = (100 - abs(Y)) * (X / 100) + X;
+  float V = (100 - abs(X)) * (Y / 100) + Y;
+  float W = (100 - abs(Y)) * (X / 100) + X;
 
   left = (V + W) / 2;
   right = (V - W) / 2;
@@ -94,7 +95,7 @@ void convertMotorsDirection(int x, int y, int &left, int &right)
 
 void stop_all()
 {
-  double old = smoothing;
+  float old = smoothing;
   smoothing = 1;
   setBothMotorsSpeed(0, 0);
   smoothing = old;
@@ -132,20 +133,23 @@ void check_and_set_speed()
 {
   leftbelt_current += (leftbelt_setpoint - leftbelt_current) / smoothing;
   rightbelt_current += (rightbelt_setpoint - rightbelt_current) / smoothing;
+  //leftbelt_current = leftbelt_setpoint;
+  //rightbelt_current = rightbelt_setpoint;
+  
 
   // Just remove some noise
-  if (abs(leftbelt_setpoint - leftbelt_current) < 1)
+  if (abs(leftbelt_setpoint - leftbelt_current) < 10)
     leftbelt_current = leftbelt_setpoint;
 
-  if (abs(rightbelt_setpoint - rightbelt_current) < 1)
+  if (abs(rightbelt_setpoint - rightbelt_current) < 10)
     rightbelt_current = rightbelt_setpoint;
 
   setMotorSpeed(leftEngine, leftbelt_current, true);
   setMotorSpeed(rightEngine, rightbelt_current, false);
 
-  /*Serial.print(leftbelt_current);
+  Serial.print(leftbelt_current);
     Serial.print("\t");
-    Serial.println(rightbelt_current);*/
+    Serial.println(rightbelt_current);
 }
 
 void loop() {

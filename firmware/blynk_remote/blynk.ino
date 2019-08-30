@@ -1,7 +1,7 @@
 void report_status()
 {
-  Blynk.virtualWrite(V40, (leftbelt_current+rightbelt_current)/2);
-  Blynk.virtualWrite(V41, (leftbelt_setpoint+rightbelt_setpoint)/2);
+  Blynk.virtualWrite(V40, (abs(leftbelt_current)+abs(rightbelt_current))/2);
+  Blynk.virtualWrite(V41, (abs(leftbelt_setpoint)+abs(rightbelt_setpoint))/2);
   Blynk.virtualWrite(V42, get_battery_voltage());
 }
 
@@ -12,7 +12,10 @@ void setSmoothing(int s)
 
 BLYNK_WRITE(V9) // Smoothing
 {
-  setSmoothing(param.asInt());
+  int s = param.asInt();
+
+  if(s>0)
+    setSmoothing(s);
 }
 
 BLYNK_WRITE(V1)

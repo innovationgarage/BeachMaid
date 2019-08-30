@@ -1,4 +1,4 @@
-double get_battery_voltage()
+float get_battery_voltage()
 {
   return map(analogRead(A0), 0, 1024, 0, 18300) / 1000.0;
 }
