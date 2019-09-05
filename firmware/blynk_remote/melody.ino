@@ -110,6 +110,20 @@ void play_melody(int m)
       beep();
       break;
 
+
+    case 11: // Boot offline
+      for (int j = 1; j < 10; j++)
+      {
+        setMotorSpeed(rightEngine, 10 - j);
+        setMotorSpeed(leftEngine, 10 - j);
+        delay(50);
+      }
+      setMotorSpeed(rightEngine, 0);
+      setMotorSpeed(leftEngine, 0);
+      delay(100);
+      beep();
+      break;
+
     default: // Beep
       beep();
       break;

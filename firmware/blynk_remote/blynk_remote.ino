@@ -23,22 +23,20 @@ struct MotorPins
 int remote_x = 0, remote_y = 0;
 unsigned long remote_stop = 0;
 unsigned long noMessagesTimeout = 0;
-const unsigned long stopAfterNoMessageMs = 10000;
+const unsigned long stopAfterNoMessageMs = 2000;
 const MotorPins leftEngine = { D7, D6, D5}, rightEngine = { D3, D2, D1};
 float smoothing = 1, leftbelt_current = 0, rightbelt_current = 0;
 int leftbelt_setpoint = 0, rightbelt_setpoint = 0;
+boolean stop_all_signals_to_motors = false, offline_mode = false;
 
 void setMotorSpeed( MotorPins motor, int speed, bool reverse = false)
 {
-  /*Serial.print("Speed: ");
-    Serial.println(speed);
-    Serial.print("PIN: ");
-    Serial.println(motor.RPWM);*/
+  if (stop_all_signals_to_motors)
+    return;
 
   speed *= reverse ? 1 : -1;
   int pwm = max(0, min(1024, (int)map(abs(speed), 0, 100, 0, 1024)));
   bool direction = speed > 0;
-  noMessagesTimeout = millis() + stopAfterNoMessageMs;
 
   if (pwm == 0)
   {
@@ -58,11 +56,7 @@ void setMotorSpeed( MotorPins motor, int speed, bool reverse = false)
 
 void setBothMotorsSpeed(int left, int right)
 {
-  /*Serial.print("New setpoints left speed:");
-    Serial.print(left);
-    Serial.print("\t, right: ");
-    Serial.println(right);*/
-
+  noMessagesTimeout = millis() + stopAfterNoMessageMs;
   leftbelt_setpoint = left;
   rightbelt_setpoint = right;
   check_and_set_speed();
@@ -86,11 +80,6 @@ void convertMotorsDirection(int x, int y, int &left, int &right)
 
   left = (V + W) / 2;
   right = (V - W) / 2;
-
-  /*Serial.print("motor left speed");
-    Serial.println((V + W) / 2);
-    Serial.print("motor right speed");
-    Serial.println((V - W) / 2);*/
 }
 
 void stop_all()
@@ -135,7 +124,7 @@ void check_and_set_speed()
   rightbelt_current += (rightbelt_setpoint - rightbelt_current) / smoothing;
   //leftbelt_current = leftbelt_setpoint;
   //rightbelt_current = rightbelt_setpoint;
-  
+
 
   // Just remove some noise
   if (abs(leftbelt_setpoint - leftbelt_current) < 10)
@@ -146,20 +135,19 @@ void check_and_set_speed()
 
   setMotorSpeed(leftEngine, leftbelt_current, true);
   setMotorSpeed(rightEngine, rightbelt_current, false);
-
-  Serial.print(leftbelt_current);
-    Serial.print("\t");
-    Serial.println(rightbelt_current);
 }
 
 void loop() {
-  Blynk.run();
+  if (!offline_mode)
+  {
+    Blynk.run();
+
+    // Report info back to the remote
+    system_status.run();
+  }
 
   // Control the engines
   speed_controller.run();
-
-  // Report info back to the remote
-  system_status.run();
 
   if (Serial.available())
   {

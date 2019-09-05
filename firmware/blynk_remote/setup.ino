@@ -32,6 +32,13 @@ void setup() {
   // Set motor pins
   setMotorPins(leftEngine);
   setMotorPins(rightEngine);
+
+  if(Blynk.connected())
   play_melody(10); // Boot
+  else
+  {
+    offline_mode = true;
+    play_melody(11);
+  }
   boot_msg(true);
 }

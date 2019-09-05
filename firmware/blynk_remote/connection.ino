@@ -1,6 +1,9 @@
 // From: https://github.com/rotarucosminleonard/Blynk-ESP8266_OfflineTask_Reconnect/blob/master/Blynk-ESP8266_OfflineTask_Reconnect.ino
 
 void check_connection() {   // check every 11s if connected to Blynk server
+  if (offline_mode)
+    return;
+
   int online = 1;
   if (!Blynk.connected()) {
     online = 0;
@@ -46,7 +49,7 @@ void check_connection() {   // check every 11s if connected to Blynk server
       }
     }
   }
-  else 
+  else
     online = 1;
 
   if (!online)

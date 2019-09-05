@@ -1,7 +1,7 @@
 void report_status()
 {
-  Blynk.virtualWrite(V40, (abs(leftbelt_current)+abs(rightbelt_current))/2);
-  Blynk.virtualWrite(V41, (abs(leftbelt_setpoint)+abs(rightbelt_setpoint))/2);
+  Blynk.virtualWrite(V40, (abs(leftbelt_current) + abs(rightbelt_current)) / 2);
+  Blynk.virtualWrite(V41, (abs(leftbelt_setpoint) + abs(rightbelt_setpoint)) / 2);
   Blynk.virtualWrite(V42, get_battery_voltage());
 }
 
@@ -14,20 +14,20 @@ BLYNK_WRITE(V9) // Smoothing
 {
   int s = param.asInt();
 
-  if(s>0)
+  if (s > 0)
     setSmoothing(s);
 }
 
 BLYNK_WRITE(V1)
 {
   //setBothMotorsSpeed(param.asInt(), rightbelt_current);
-  leftbelt_setpoint=param.asInt();
+  leftbelt_setpoint = param.asInt();
 }
 
 BLYNK_WRITE(V2)
 {
   //setBothMotorsSpeed(leftbelt_current, param.asInt());
-  rightbelt_setpoint=param.asInt();
+  rightbelt_setpoint = param.asInt();
 }
 
 BLYNK_WRITE(V11) // X speed
@@ -62,6 +62,17 @@ BLYNK_WRITE(V4) // Stop
   if (param.asInt() == 1)
     stop_all();
 }
+
+BLYNK_WRITE(V5) // Kill switch
+{
+  int p = param.asInt();
+  
+  if (p)
+    stop_all();
+    
+  stop_all_signals_to_motors = p;
+}
+
 
 BLYNK_WRITE(V3)
 {

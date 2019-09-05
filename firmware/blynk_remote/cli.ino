@@ -11,7 +11,8 @@ void boot_msg(bool info = false)
   Serial.print(" Build ");
   Serial.print(__DATE__);
   Serial.print(" ");
-  Serial.println(__TIME__);
+  Serial.print(__TIME__);
+  Serial.println(offline_mode ? " - OFFLINE MODE":"");
 
   if (info)
     Serial.println("Type help for more information");
