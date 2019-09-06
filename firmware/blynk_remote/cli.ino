@@ -12,11 +12,13 @@ void boot_msg(bool info = false)
   Serial.print(__DATE__);
   Serial.print(" ");
   Serial.print(__TIME__);
-  Serial.println(offline_mode ? " - OFFLINE MODE":"");
+  Serial.println(offline_mode ? " - OFFLINE MODE" : "");
 
   if (info)
+  {
     Serial.println("Type help for more information");
-  Serial.println();
+    Serial.println();
+  }
 }
 
 void stop_callback(cmd* commandPointer) {
