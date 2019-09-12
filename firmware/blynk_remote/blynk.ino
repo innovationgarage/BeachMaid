@@ -22,12 +22,14 @@ BLYNK_WRITE(V1)
 {
   //setBothMotorsSpeed(param.asInt(), rightbelt_current);
   leftbelt_setpoint = param.asInt();
+  there_is_activity();
 }
 
 BLYNK_WRITE(V2)
 {
   //setBothMotorsSpeed(leftbelt_current, param.asInt());
   rightbelt_setpoint = param.asInt();
+  there_is_activity();
 }
 
 BLYNK_WRITE(V11) // X speed
@@ -55,6 +57,7 @@ BLYNK_WRITE(V10)
 {
   //setMotorsDirection(-param[0].asInt(), -param[1].asInt());
   convertMotorsDirection(-param[0].asInt(), -param[1].asInt(), leftbelt_setpoint, rightbelt_setpoint);
+  there_is_activity();
 }
 
 BLYNK_WRITE(V4) // Stop
@@ -66,10 +69,10 @@ BLYNK_WRITE(V4) // Stop
 BLYNK_WRITE(V5) // Kill switch
 {
   int p = param.asInt();
-  
+
   if (p)
     stop_all();
-    
+
   stop_all_signals_to_motors = p;
 }
 

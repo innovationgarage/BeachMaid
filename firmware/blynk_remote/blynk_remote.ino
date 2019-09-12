@@ -54,9 +54,14 @@ void setMotorSpeed( MotorPins motor, int speed, bool reverse = false)
   //analogWrite(motor.L_EN, pwm);
 }
 
-void setBothMotorsSpeed(int left, int right)
+void there_is_activity()
 {
   noMessagesTimeout = millis() + stopAfterNoMessageMs;
+}
+
+void setBothMotorsSpeed(int left, int right)
+{
+  there_is_activity();
   leftbelt_setpoint = left;
   rightbelt_setpoint = right;
   check_and_set_speed();
@@ -117,14 +122,12 @@ void setMotorPins( MotorPins motor)
   //pinMode(motor.R_EN, OUTPUT);
 }
 
-
 void check_and_set_speed()
 {
   leftbelt_current += (leftbelt_setpoint - leftbelt_current) / smoothing;
   rightbelt_current += (rightbelt_setpoint - rightbelt_current) / smoothing;
   //leftbelt_current = leftbelt_setpoint;
   //rightbelt_current = rightbelt_setpoint;
-
 
   // Just remove some noise
   if (abs(leftbelt_setpoint - leftbelt_current) < 10)
@@ -180,6 +183,8 @@ void loop() {
   else if (millis() > noMessagesTimeout)
   {
     stop_all();
+
+    there_is_activity();
     check_connection();
   }
 }
