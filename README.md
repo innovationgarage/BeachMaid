@@ -44,8 +44,14 @@ You need the following parts and tools for the assembly:
 ### Wooden body
 
 ### Tank tracks
+The tank tracks require 64x 6mm thick by 40 mm length wooden dowels https://www.aliexpress.com/item/32908209214.html. Before cutting the link pieces, test the fit of your dowels to ensure the friction between the outer parts is enough to hold everything without glue.
 
 ### Wheels
+The assembly of the wheels is the following:
 
 ### Electric system
-
+The brain is a ESP8266 that allows you to remote control the robot via Blynk and serial. The following parts are required:
+* ESP8266 board, like a Wemos D1
+* 2x 43A motor controller https://www.amazon.com/HiLetgo-BTS7960-Driver-Arduino-Current/dp/B00WSN98DC
+* Thick wire (14AWG or lower)
+* Screw terminals for joining the wire
