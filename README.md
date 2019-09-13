@@ -55,3 +55,8 @@ The brain is a ESP8266 that allows you to remote control the robot via Blynk and
 * 2x 43A motor controller https://www.amazon.com/HiLetgo-BTS7960-Driver-Arduino-Current/dp/B00WSN98DC
 * Thick wire (14AWG or lower)
 * Screw terminals for joining the wire
+
+This is the firmware for the ESP8266: https://github.com/innovationgarage/epimp-body/tree/master/firmware/blynk_remote
+QR code for cloning the Blynk app:
+
+Remember to create a new Auth code, and fill the `credentials.h` file with your own information.
