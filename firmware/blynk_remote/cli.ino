@@ -27,6 +27,36 @@ void stop_callback(cmd* commandPointer) {
   Serial.println("OK");
 }
 
+void beep_callback(cmd* commandPointer) {
+  Command cmd(commandPointer);
+  Argument melody = cmd.getArgument("melody");
+  int m = melody.getValue().toInt();
+  if (!m)
+  {
+    Serial.print("Executing beep: ");
+    beep();
+  }
+  else
+  {
+    Serial.print("Executing melody ");
+    Serial.print(m);
+    Serial.print(": ");
+    play_melody(m);
+  }
+  Serial.println("OK");
+}
+
+void reboot_callback(cmd* commandPointer) {
+  Serial.print("Rebooting...");
+  stop_all();
+
+  Command cmd(commandPointer);
+  if (cmd.getArgument("force").isSet())
+    ESP.reset();
+  else
+    ESP.restart();
+}
+
 void status_callback(cmd* commandPointer) {
   Serial.print("battery=");
   Serial.println(get_battery_voltage());

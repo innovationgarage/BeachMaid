@@ -23,7 +23,7 @@ struct MotorPins
 int remote_x = 0, remote_y = 0;
 unsigned long remote_stop = 0;
 unsigned long noMessagesTimeout = 0;
-const unsigned long stopAfterNoMessageMs = 2000;
+const unsigned long stopAfterNoMessageMs = 4000;
 const MotorPins leftEngine = { D7, D6, D5}, rightEngine = { D3, D2, D1};
 float smoothing = 1, leftbelt_current = 0, rightbelt_current = 0;
 int leftbelt_setpoint = 0, rightbelt_setpoint = 0;
@@ -97,7 +97,7 @@ void stop_all()
 
 // CLI interface
 SimpleCLI cli;
-Command move, belts, stop, help, status;
+Command moveCmd, beltsCmd, stopCmd, helpCmd, statusCmd, beepCmd, rebootCmd;
 
 // Callback in case of an error
 void errorCallback(cmd_error* e)
