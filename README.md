@@ -5,6 +5,15 @@ Electric Powered Intelligent Multipurpose Platform
 
 In short, the ePiMP is a low cost, open source wooden tank robot, that can be constructed by a single sheet of 12 mm plywood, two cheap battery powered drills and few 3d printed parts.
 
+## Changelog
+
+* 2019-09-16: Version 1.1
+   - Handles and holes to the backcover
+   - Battery measurement circuit
+   - Replaced wooden drive gears by plastic ones
+   - 2 new mounting holes in the "lip" parts
+* 2019-06-31: First version
+
 ## Fabrication
 
 ### Wooden pieces
@@ -12,9 +21,9 @@ All the pieces fit in a standard 2.44m by 1.2m sheet of plywood, 12 mm (15/32 in
 
 ![](platform/media/cutting.jpg)
 
-The list of parts wooden parts to cut in the CNC is (aprox. 112 total pieces, depending on the version of the design)
+The list of parts wooden parts to cut in the CNC is aprox. 112 total pieces (depending on the version of the design)
 
-#### Already layout sheets (for X-Carve 1000mm or similar with at least 750mm travel per axis)
+#### Already layout sheets (for X-Carve 1000mm or similar)
 
 The layout use 790mm square sheets:
 
@@ -31,7 +40,7 @@ The required quantity of the pieces is:
 ![](platform/svg/Workpiece%2038%20(ALL%20(unique)%20PIECES%20v1.1)/quantity.PNG)
 
 ### Plastic pieces
-The list of needed printed parts is (56 total pieces):
+The list of needed printed parts is (56 total pieces, by the quantity specified in the filename):
 https://github.com/innovationgarage/epimp-body/tree/master/platform/stl
 
 ## Assembly
