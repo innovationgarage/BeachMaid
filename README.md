@@ -74,6 +74,8 @@ The brain is a ESP8266 that allows you to remote control the robot via Blynk and
 
  <img src="platform/media/interior1.jpg" width="250">  <img src="platform/media/interior2.jpg" width="250"> 
 
+![](firmware/schematic_bb.png)
+
 This is the firmware for the ESP8266: https://github.com/innovationgarage/epimp-body/tree/master/firmware/blynk_remote
 QR code for cloning the Blynk app:
 
