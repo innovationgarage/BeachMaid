@@ -12,7 +12,7 @@ All the pieces fit in a standard 2.44 by 1.2 sheet of plywood, 12 mm (15/32 in) 
 
 ![](platform/media/cutting.jpg)
 
-The list of parts wooden parts to cut in the CNC is (aprox. 112 total pieces, depending on the version of the design):
+The list of parts wooden parts to cut in the CNC is (aprox. 112 total pieces, depending on the version of the design)
 
 #### Already layout sheets (for X-Carve 1000mm or similar with at least 750mm travel per axis)
 
@@ -49,24 +49,28 @@ You need the following parts and tools for the assembly:
 * M5, 12 mm wood screws 
 * M8 washers
 
-![](platform/media/assembled.jpg)
-
 ### Wooden body
 
 ### Tank tracks
 The tank tracks require 64x 6mm thick by 40 mm length wooden dowels https://www.aliexpress.com/item/32908209214.html. Before cutting the link pieces, test the fit of your dowels to ensure the friction between the outer parts is enough to hold everything without glue.
 
-### Wheels
-The assembly of the wheels is the following:
+<img src="platform/media/assembled.jpg" width="250">
 
-### Electric system
+### Wheels and gears
+The assembly is the following:
+<img src="platform/media/drive_gears.jpg" width="250"> <img src="platform/media/wheels.jpg" width="250"> 
+
+
+### Drive and electric system
 The brain is a ESP8266 that allows you to remote control the robot via Blynk and serial. The following parts are required:
 * ESP8266 board, like a Wemos D1
 * 2x 43A motor controller https://www.amazon.com/HiLetgo-BTS7960-Driver-Arduino-Current/dp/B00WSN98DC
 * Thick wire (14AWG or lower)
-* Screw terminals for joining the wire
+* Screw terminals for joining wire
+
+ <img src="platform/media/interior1.jpg" width="250">  <img src="platform/media/interior2.jpg" width="250"> 
 
 This is the firmware for the ESP8266: https://github.com/innovationgarage/epimp-body/tree/master/firmware/blynk_remote
 QR code for cloning the Blynk app:
-
+![](platform/media/blynk.jpg)
 Remember to create a new Auth code, and fill the `credentials.h` file with your own information.
