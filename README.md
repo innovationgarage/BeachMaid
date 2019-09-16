@@ -92,4 +92,4 @@ QR code for cloning the Blynk app:
 
 <img src="platform/media/blynk.jpg" width="400">
 
-Remember to create a new Auth code, and fill the `credentials.h` file with your own information.
+Remember to create a new Auth code, and fill the `credentials.h` file with your own information. Check https://github.com/innovationgarage/epimp-body/blob/master/firmware/README.md for more details about the firmware.
