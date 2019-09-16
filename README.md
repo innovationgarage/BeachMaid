@@ -30,7 +30,6 @@ The required quantity of the pieces is:
 
 ![](platform/svg/Workpiece%2038%20(ALL%20(unique)%20PIECES%20v1.1)/quantity.PNG)
 
-
 ### Plastic pieces
 The list of needed printed parts is (56 total pieces):
 https://github.com/innovationgarage/epimp-body/tree/master/platform/stl
@@ -65,13 +64,13 @@ The wooden wheels go in between two bearing holders, using 3 of the M6 woodscrew
 
 <img src="platform/media/drive_gears.jpg" width="250">
 
-
 ### Drive and electric system
 The brain is a ESP8266 that allows you to remote control the robot via Blynk and serial. The following parts are required:
 * ESP8266 board, like a Wemos D1
 * 2x 43A motor controller https://www.amazon.com/HiLetgo-BTS7960-Driver-Arduino-Current/dp/B00WSN98DC
 * Thick wire (14AWG or lower)
 * Screw terminals for joining wire
+* Some wire, resistors, switch, heat shrink, etc
 
  <img src="platform/media/interior1.jpg" width="250">  <img src="platform/media/interior2.jpg" width="250"> 
 
