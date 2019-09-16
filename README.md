@@ -8,7 +8,7 @@ In short, the ePiMP is a low cost, open source wooden tank robot, that can be co
 ## Fabrication
 
 ### Wooden pieces
-All the pieces fit in a standard 2.44 by 1.2 sheet of plywood, 12 mm (15/32 in) thickness. The thickness can be changed but that would require changes in some internal slots that interlock, and some plastic pieces that assume 12 mm as the thickness.
+All the pieces fit in a standard 2.44m by 1.2m sheet of plywood, 12 mm (15/32 in) thickness. The thickness can be changed but that would require changes in some internal slots that interlock, and some plastic pieces that assume 12 mm as the thickness.
 
 ![](platform/media/cutting.jpg)
 
@@ -45,7 +45,7 @@ You need the following parts and tools for the assembly:
 * 2x M6 bolts and nut set for the clutch holder for the drills
 * 2x cheap drills https://www.biltema.no/verktoy/el-verktoy/boremaskiner/drillskrutrekker-cd-12v-2000028475
 * 8x skateboard ball bearings (608Z)
-* M6, 15 mm wood screws for the wheel center part that holds the bearings
+* 28x M6, 15 mm wood screws for the wheel center part that holds the bearings
 * M5, 12 mm wood screws 
 * M8 washers
 
@@ -58,7 +58,12 @@ The tank tracks require 64x 6mm thick by 40 mm length wooden dowels https://www.
 
 ### Wheels and gears
 The assembly is the following:
-<img src="platform/media/drive_gears.jpg" width="250"> <img src="platform/media/wheels.jpg" width="250"> 
+
+<img src="platform/media/wheels.jpg" width="250"> 
+
+The wooden wheels go in between two bearing holders, using 3 of the M6 woodscrews per side. The two wheels on the back have the big gear in the interior side instead:
+
+<img src="platform/media/drive_gears.jpg" width="250">
 
 
 ### Drive and electric system
@@ -72,5 +77,7 @@ The brain is a ESP8266 that allows you to remote control the robot via Blynk and
 
 This is the firmware for the ESP8266: https://github.com/innovationgarage/epimp-body/tree/master/firmware/blynk_remote
 QR code for cloning the Blynk app:
-![](platform/media/blynk.jpg)
+
+<img src="platform/media/blynk.jpg" width="400">
+
 Remember to create a new Auth code, and fill the `credentials.h` file with your own information.
