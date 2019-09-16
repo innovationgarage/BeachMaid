@@ -22,4 +22,4 @@ The default is 8 data bits, no parity, one stop bit, bauds 115200.
 
 ## Blynk
 
-<img src="firmware/blynk_ss.jpg" width="400">
+<img src="blynk_ss.jpg" width="400">
