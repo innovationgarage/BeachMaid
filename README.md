@@ -68,12 +68,14 @@ The wooden wheels go in between two bearing holders, using 3 of the M6 woodscrew
 The brain is a ESP8266 that allows you to remote control the robot via Blynk and serial. The following parts are required:
 * ESP8266 board, like a Wemos D1
 * 2x 43A motor controller https://www.amazon.com/HiLetgo-BTS7960-Driver-Arduino-Current/dp/B00WSN98DC
+* 5V DC-DC board (LM2596 or similar, depicted as 7805 in the circuit below)
 * Thick wire (14AWG or lower)
 * Screw terminals for joining wire
 * Some wire, resistors, switch, heat shrink, etc
 
  <img src="platform/media/interior1.jpg" width="250">  <img src="platform/media/interior2.jpg" width="250"> 
 
+The resistor divider shown below is using 10K Ohm and 2.2K Ohm resistors for getting a value around 3V when the battery is fully charged. 
 ![](firmware/schematic_bb.png)
 
 This is the firmware for the ESP8266: https://github.com/innovationgarage/epimp-body/tree/master/firmware/blynk_remote
