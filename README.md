@@ -9,17 +9,27 @@ In short, the ePiMP is a low cost, open source wooden tank robot, that can be co
 
 ### Wooden pieces
 All the pieces fit in a standard 2.44 by 1.2 sheet of plywood, 12 mm (15/32 in) thickness. The thickness can be changed but that would require changes in some internal slots that interlock, and some plastic pieces that assume 12 mm as the thickness.
+
+![](platform/media/cutting.jpg)
+
 The list of parts wooden parts to cut in the CNC is (aprox. 112 total pieces, depending on the version of the design):
 
 #### Already layout sheets (for X-Carve 1000mm or similar with at least 750mm travel per axis)
 
+The layout use 790mm square sheets:
+
+<img src="platform/svg/Workpiece%2038%20(ALL%20(unique)%20PIECES%20v1.1)/sheet1.PNG" width="250"> <img src="platform/svg/Workpiece%2038%20(ALL%20(unique)%20PIECES%20v1.1)/sheet2.PNG" width="250"> <img src="platform/svg/Workpiece%2038%20(ALL%20(unique)%20PIECES%20v1.1)/sheet3.PNG" width="250">
+
+https://github.com/innovationgarage/epimp-body/blob/master/platform/svg/Workpiece%2038%20(ALL%20(unique)%20PIECES%20v1.1)/nested_optimized3.svg
 
 #### Unique pieces
-https://github.com/innovationgarage/epimp-body/tree/master/platform/svg/Workpiece%2038%20(ALL%20(unique)%20PIECES%20v1.1)
 
-The quantity of the pieces is:
+https://github.com/innovationgarage/epimp-body/blob/master/platform/svg/Workpiece%2038%20(ALL%20(unique)%20PIECES%20v1.1)/design.svg
 
-![](platform/media/cutting.jpg)
+The required quantity of the pieces is:
+
+![](platform/svg/Workpiece%2038%20(ALL%20(unique)%20PIECES%20v1.1)/quantity.PNG)
+
 
 ### Plastic pieces
 The list of needed printed parts is (56 total pieces):
