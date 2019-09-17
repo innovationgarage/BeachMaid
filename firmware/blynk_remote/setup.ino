@@ -6,7 +6,7 @@ void setup() {
   rebootCmd = cli.addCmd("reboot", reboot_callback);
   helpCmd = cli.addCmd("help", help_callback);
   statusCmd = cli.addCmd("status", status_callback);
-  
+
   moveCmd = cli.addCmd("move", move_callback);
   moveCmd.addPosArg("x");
   moveCmd.addPosArg("y");
@@ -17,6 +17,8 @@ void setup() {
   beltsCmd.addPosArg("smoothing", "1");
   rebootCmd.addFlagArg("force");
   beepCmd.addPosArg("melody", "0");
+  statusCmd.addFlagArg("stream");
+  statusCmd.addFlagArg("quiet");
 
   beep();
 

@@ -58,18 +58,35 @@ void reboot_callback(cmd* commandPointer) {
 }
 
 void status_callback(cmd* commandPointer) {
-  Serial.print("battery=");
-  Serial.println(get_battery_voltage());
-  Serial.print("leftbelt_setpoint=");
-  Serial.println(leftbelt_setpoint);
-  Serial.print("rightbelt_setpoint=");
-  Serial.println(rightbelt_setpoint);
-  Serial.print("leftbelt_current=");
-  Serial.println(leftbelt_current);
-  Serial.print("rightbelt_current=");
-  Serial.println(rightbelt_current);
-  Serial.print("smoothing=");
-  Serial.println(smoothing);
+  Command cmd(commandPointer);
+
+  bool enabled = cmd.getArgument("stream").isSet();
+  bool disabled = cmd.getArgument("quiet").isSet();
+
+  if (enabled && !disabled)
+    verbose = true;
+  else
+  {
+    if (disabled && !enabled)
+      verbose = false;
+    else
+    {
+      Serial.print("$battery=");
+      Serial.println(get_battery_voltage());
+      Serial.print("$leftbelt_setpoint=");
+      Serial.println(leftbelt_setpoint);
+      Serial.print("$rightbelt_setpoint=");
+      Serial.println(rightbelt_setpoint);
+      Serial.print("$leftbelt_current=");
+      Serial.println(leftbelt_current);
+      Serial.print("$rightbelt_current=");
+      Serial.println(rightbelt_current);
+      Serial.print("$smoothing=");
+      Serial.println(smoothing);
+      Serial.print("$verbose=");
+      Serial.println(verbose);
+    }
+  }
 }
 
 void help_callback(cmd* commandPointer) {

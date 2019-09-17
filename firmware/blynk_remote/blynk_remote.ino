@@ -27,7 +27,7 @@ const unsigned long stopAfterNoMessageMs = 4000;
 const MotorPins leftEngine = { D7, D6, D5}, rightEngine = { D3, D2, D1};
 float smoothing = 1, leftbelt_current = 0, rightbelt_current = 0;
 int leftbelt_setpoint = 0, rightbelt_setpoint = 0;
-boolean stop_all_signals_to_motors = false, offline_mode = false;
+boolean stop_all_signals_to_motors = false, offline_mode = false, verbose = false;
 
 void setMotorSpeed( MotorPins motor, int speed, bool reverse = false)
 {
@@ -138,6 +138,16 @@ void check_and_set_speed()
 
   setMotorSpeed(leftEngine, leftbelt_current, true);
   setMotorSpeed(rightEngine, rightbelt_current, false);
+
+  if(verbose)
+  {
+    Serial.print("$status=");
+    Serial.print(millis());
+    Serial.print(",");
+    Serial.print(leftbelt_current);
+    Serial.print(",");
+    Serial.println(rightbelt_current);
+  }
 }
 
 void loop() {
