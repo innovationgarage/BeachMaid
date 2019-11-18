@@ -87,9 +87,19 @@ The brain is a ESP8266 that allows you to remote control the robot via Blynk and
 The resistor divider shown below is using 10K Ohm and 2.2K Ohm resistors for getting a value around 3V when the battery is fully charged. 
 ![](firmware/schematic_bb.png)
 
+## Firmware
+
 This is the firmware for the ESP8266: https://github.com/innovationgarage/epimp-body/tree/master/firmware/blynk_remote
 QR code for cloning the Blynk app:
 
 <img src="platform/media/blynk.jpg" width="400">
 
 Remember to create a new Auth code, and fill the `credentials.h` file with your own information. Check https://github.com/innovationgarage/epimp-body/blob/master/firmware/README.md for more details about the firmware.
+
+### Compile
+For the compilation on Arduino you need the ESP8266 toolkit following: https://github.com/esp8266/Arduino#installing-with-boards-manager
+
+Install the following libraries (Sketch/ Include library/ Manage):
+
+* SimpleCLI
+* Blynk
