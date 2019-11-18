@@ -99,6 +99,8 @@ Remember to create a new Auth code, and fill the `credentials.h` file with your 
 ### Compile
 For the compilation on Arduino you need the ESP8266 toolkit following: https://github.com/esp8266/Arduino#installing-with-boards-manager
 
+Select "LOLIN(WEMOS) D1 R2 & Mini" from Tools/ Boards to compile.
+
 Install the following libraries (Sketch/ Include library/ Manage):
 
 * SimpleCLI
