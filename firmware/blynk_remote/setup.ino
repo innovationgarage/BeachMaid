@@ -1,5 +1,13 @@
 void setup() {
   Serial.begin(115200);
+
+  pinMode(pwm_left_pin, INPUT_PULLUP);
+  pinMode(pwm_right_pin, INPUT_PULLUP);
+
+  // Initialize
+  pwm_left_falling();
+  pwm_right_falling();
+
   cli.setOnError(errorCallback); // Set error Callback
   stopCmd = cli.addCmd("stop", stop_callback);
   beepCmd = cli.addCmd("beep", beep_callback);
@@ -34,13 +42,14 @@ void setup() {
 
   speed_controller.setInterval(100L, check_and_set_speed);
   system_status.setInterval(1000L, report_status);
+  remote_receiver.setInterval(100L, remote_receive_process);
 
   // Set motor pins
   setMotorPins(leftEngine);
   setMotorPins(rightEngine);
 
-  if(Blynk.connected())
-  play_melody(10); // Boot
+  if (Blynk.connected())
+    play_melody(10); // Boot
   else
   {
     offline_mode = true;

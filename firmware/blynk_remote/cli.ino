@@ -116,7 +116,5 @@ void belts_callback(cmd* commandPointer) {
 
   Serial.print("Sending belt speed to motors: ");
   setBothMotorsSpeed(left.getValue().toInt(), right.getValue().toInt());
-  //setMotorSpeed(leftEngine, left.getValue().toInt());
-  //setMotorSpeed(rightEngine, right.getValue().toInt(), true);
   Serial.println("OK");
 }

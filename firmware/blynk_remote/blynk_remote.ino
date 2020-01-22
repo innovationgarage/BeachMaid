@@ -9,27 +9,29 @@
 #include <ESP8266WiFiMulti.h>
 
 ESP8266WiFiMulti wifiMulti;     // Create an instance of the ESP8266WiFiMulti class, called 'wifiMulti'
-BlynkTimer speed_controller, system_status;
+BlynkTimer speed_controller, system_status, remote_receiver;
 
 // Motor pins
 struct MotorPins
 {
-  //byte RPWM;
   byte RPWM;
   byte LPWM;
   byte L_R_EN;
 };
 
+// Radio remote control and engine pins
+const byte pwm_left_pin = D5, pwm_right_pin = D1;
+const MotorPins rightEngine = { D3, D0, D7}, leftEngine = { D4, D2, D8};
+
 int remote_x = 0, remote_y = 0;
 unsigned long remote_stop = 0;
 unsigned long noMessagesTimeout = 0;
 const unsigned long stopAfterNoMessageMs = 4000;
-const MotorPins leftEngine = { D7, D6, D5}, rightEngine = { D3, D2, D1};
 float smoothing = 1, leftbelt_current = 0, rightbelt_current = 0;
 int leftbelt_setpoint = 0, rightbelt_setpoint = 0;
 boolean stop_all_signals_to_motors = false, offline_mode = false, verbose = false;
 
-void setMotorSpeed( MotorPins motor, int speed, bool reverse = false)
+void setMotorSpeed(MotorPins motor, int speed, bool reverse = false)
 {
   if (stop_all_signals_to_motors)
     return;
@@ -37,6 +39,14 @@ void setMotorSpeed( MotorPins motor, int speed, bool reverse = false)
   speed *= reverse ? 1 : -1;
   int pwm = max(0, min(1024, (int)map(abs(speed), 0, 100, 0, 1024)));
   bool direction = speed > 0;
+
+  /*Serial.print("MOTOR:");
+  Serial.print(motor.RPWM);
+  Serial.print("\tSPD:");
+  Serial.print(direction ? "+" : "-");
+  Serial.print(pwm);
+  if (motor.RPWM != 0)
+    Serial.println();*/
 
   if (pwm == 0)
   {
@@ -51,7 +61,6 @@ void setMotorSpeed( MotorPins motor, int speed, bool reverse = false)
   }
 
   analogWrite(motor.L_R_EN, pwm);
-  //analogWrite(motor.L_EN, pwm);
 }
 
 void there_is_activity()
@@ -67,7 +76,7 @@ void setBothMotorsSpeed(int left, int right)
   check_and_set_speed();
 }
 
-int setMotorsDirection(int x, int y)
+void setMotorsDirection(int x, int y)
 {
   int left, right;
   convertMotorsDirection(x, y, left, right);
@@ -77,11 +86,11 @@ int setMotorsDirection(int x, int y)
 void convertMotorsDirection(int x, int y, int &left, int &right)
 {
   // From http://home.kendra.com/mauser/Joystick.html
-  int X = max(-100, min(100, -1 * x));
-  int Y = max(-100, min(100, -1 * y));
+  double X = max(-100, min(100, -1 * x));
+  double Y = max(-100, min(100, -1 * y));
 
-  float V = (100 - abs(X)) * (Y / 100) + Y;
-  float W = (100 - abs(Y)) * (X / 100) + X;
+  double V = (100 - abs(X)) * (Y / 100) + Y;
+  double W = (100 - abs(Y)) * (X / 100) + X;
 
   left = (V + W) / 2;
   right = (V - W) / 2;
@@ -118,7 +127,7 @@ void setMotorPins( MotorPins motor)
 {
   pinMode(motor.RPWM, OUTPUT);
   pinMode(motor.LPWM, OUTPUT);
-  pinMode(motor.L_R_EN, OUTPUT);
+  pinMode(motor.L_R_EN, OUTPUT); // Only using one pin for both
   //pinMode(motor.R_EN, OUTPUT);
 }
 
@@ -126,8 +135,6 @@ void check_and_set_speed()
 {
   leftbelt_current += (leftbelt_setpoint - leftbelt_current) / smoothing;
   rightbelt_current += (rightbelt_setpoint - rightbelt_current) / smoothing;
-  //leftbelt_current = leftbelt_setpoint;
-  //rightbelt_current = rightbelt_setpoint;
 
   // Just remove some noise
   if (abs(leftbelt_setpoint - leftbelt_current) < 10)
@@ -139,7 +146,7 @@ void check_and_set_speed()
   setMotorSpeed(leftEngine, leftbelt_current, true);
   setMotorSpeed(rightEngine, rightbelt_current, false);
 
-  if(verbose)
+  if (verbose)
   {
     Serial.print("$status=");
     Serial.print(millis());
@@ -158,6 +165,9 @@ void loop() {
     // Report info back to the remote
     system_status.run();
   }
+
+  // Receiver
+  remote_receiver.run();
 
   // Control the engines
   speed_controller.run();
