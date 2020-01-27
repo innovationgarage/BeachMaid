@@ -1,10 +1,11 @@
 void setup() {
   Serial.begin(115200);
-
+  
+  pinMode(battery_level_pin,INPUT);
   pinMode(pwm_left_pin, INPUT_PULLUP);
   pinMode(pwm_right_pin, INPUT_PULLUP);
 
-  // Initialize
+  // Initialize remote control interrupts
   pwm_left_falling();
   pwm_right_falling();
 

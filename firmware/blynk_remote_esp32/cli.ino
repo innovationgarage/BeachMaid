@@ -1,6 +1,7 @@
 float get_battery_voltage()
 {
-  return map(analogRead(battery_level_pin), 0, 1024, 0, 18300) / 1000.0;
+  return map(analogRead(battery_level_pin), 0, 4095, 0, 18300) / 1000.0; // ESP32
+  //return map(analogRead(battery_level_pin), 0, 1024, 0, 18300) / 1000.0; // ESP8266
 }
 
 void boot_msg(bool info = false)
@@ -51,10 +52,7 @@ void reboot_callback(cmd* commandPointer) {
   stop_all();
 
   Command cmd(commandPointer);
-  /*if (cmd.getArgument("force").isSet())
-    ESP.restart();
-  else*/
-    ESP.restart();
+  ESP.restart();
 }
 
 void status_callback(cmd* commandPointer) {
