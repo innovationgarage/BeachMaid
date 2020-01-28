@@ -1,0 +1,3 @@
+Material type: MDF
+Material dimensions: 760 mm x 760 mm x 15.999999999999998 mm
+Bit: 2.3 mm, other-flat
