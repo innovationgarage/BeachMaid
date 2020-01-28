@@ -1,6 +1,6 @@
 float get_battery_voltage()
 {
-  return map(analogRead(battery_level_pin), 0, 4095, 0, 18300) / 1000.0; // ESP32
+  return 0.0042 * (double)analogRead(battery_level_pin) + 1.5669; // ESP32
   //return map(analogRead(battery_level_pin), 0, 1024, 0, 18300) / 1000.0; // ESP8266
 }
 

@@ -21,7 +21,7 @@ struct MotorPins
 };
 
 // PINS
-const byte battery_level_pin = 15;
+const byte battery_level_pin = 34;
 const byte pwm_left_pin = 19, pwm_right_pin = 23;
 const MotorPins rightEngine = { 13, 32, 33}, leftEngine = { 25, 26, 27};
 
@@ -41,16 +41,6 @@ void setMotorSpeed(MotorPins motor, int speed, bool reverse = false)
   speed *= reverse ? 1 : -1;
   int pwm = max(0, min(1024, (int)map(abs(speed), 0, 100, 0, 1024)));
   bool direction = speed > 0;
-
-  Serial.print("MOTOR:");
-  Serial.print(motor.RPWM);
-  Serial.print("\tSPD:");
-  Serial.print(direction ? "+" : "-");
-  Serial.print(pwm);
-  if (motor.RPWM != 25)
-    Serial.println();
-    else
-    Serial.print(" ");
 
   if (pwm == 0)
   {
